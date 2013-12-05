@@ -1,7 +1,7 @@
 # devise_zxcvbn
 
 Plugin for devise to reject weak passwords, using [zxcvbn-ruby](https://github.com/envato/zxcvbn-ruby) which is a ruby port of [zxcvbn: realistic password strength estimation](https://tech.dropbox.com/2012/04/zxcvbn-realistic-password-strength-estimation/). 
-The user's password will be rejected if the score is below 3 by default, it using the email as user input to zxcvbn. 
+The user's password will be rejected if the score is below 3 by default. It also uses the email as user input to zxcvbn, to downscore passwords containing the email.
 
 ## Installation
 
