@@ -19,7 +19,7 @@ Add this line to your application's Gemfile:
 Default parameters
 
     Devise.setup do |config|
-      config.min_password_score = 3  # 0, 1, 2, 3 or 4
+      config.min_password_score = 4  # 0, 1, 2, 3 or 4
     end
 
 ### Error Message
