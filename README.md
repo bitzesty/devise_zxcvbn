@@ -28,7 +28,7 @@ Default parameters
     en:
       errors:
         messages:
-          weak_password: "not strong enough. It scored %{score}. It must score at least %{min_password_score}."
+          weak_password: "not strong enough. Consider adding a number, symbols or more letters to make it stronger"
 
 
 ## Contributing
