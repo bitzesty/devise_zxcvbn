@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["matt@bitzesty.com"]
   spec.description   = %q{It adds password strength checking via ruby-zxcvbn to reject weak passwords }
   spec.summary       = %q{Devise plugin to reject weak passwords}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/bitzesty/devise_zxcvbn"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
