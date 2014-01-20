@@ -1,3 +1,5 @@
+require 'devise_zxcvbn/email_tokeniser'
+
 module Devise
   module Models
     module Zxcvbnable
@@ -12,7 +14,8 @@ module Devise
       private
 
       def not_weak_password
-        password_score = ::Zxcvbn.test(password, [self.email]).score
+        weak_words = [self.email] + DeviseZxcvbn::EmailTokeniser.split(self.email)
+        password_score = ::Zxcvbn.test(password, weak_words).score
         if password_score < min_password_score
           self.errors.add :password, :weak_password, score: password_score, min_password_score: min_password_score
           return false
