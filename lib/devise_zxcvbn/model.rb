@@ -14,7 +14,12 @@ module Devise
       private
 
       def not_weak_password
-        weak_words = [self.email] + DeviseZxcvbn::EmailTokeniser.split(self.email)
+        weak_words = if self.email
+          [self.email, *DeviseZxcvbn::EmailTokeniser.split(self.email)]
+        else
+          []
+        end
+
         password_score = ::Zxcvbn.test(password, weak_words).score
         if password_score < min_password_score
           self.errors.add :password, :weak_password, score: password_score, min_password_score: min_password_score
