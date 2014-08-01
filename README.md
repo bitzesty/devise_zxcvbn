@@ -32,11 +32,11 @@ A score of less than 3 is not recommended.
 
 Example error message, the `score` and `min_password_score` variables are also passed through if you need them.
 
-    # config/locale/devise.en.yml
+    # config/locales/devise.en.yml
     en:
       errors:
         messages:
-          weak_password: "not strong enough. Consider adding a number, symbols or more letters to make it stronger"
+          weak_password: "Password not strong enough. Consider adding a number, symbols or more letters to make it stronger."
 
 
 ## Contributing
