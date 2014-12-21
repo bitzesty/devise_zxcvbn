@@ -24,6 +24,7 @@ Add this line to your application's Gemfile:
 
 A score of less than 3 is not recommended.
 
+    # config/initializers/devise.rb
     Devise.setup do |config|
       config.min_password_score = 4
     end
@@ -36,7 +37,7 @@ Example error message, the `score` and `min_password_score` variables are also p
     en:
       errors:
         messages:
-          weak_password: "Password not strong enough. Consider adding a number, symbols or more letters to make it stronger."
+          weak_password: "not strong enough. Consider adding a number, symbols or more letters to make it stronger."
 
 
 ## Contributing
