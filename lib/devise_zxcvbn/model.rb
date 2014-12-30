@@ -14,12 +14,19 @@ module Devise
       private
 
       def not_weak_password
-        weak_words = if self.email
-          [self.email, *DeviseZxcvbn::EmailTokeniser.split(self.email)]
-        else
-          []
+        weak_words = []
+        
+        # User method results are saved locally to prevent repeat calls that might be expensive
+        if email = self.email
+          weak_words += [email, *DeviseZxcvbn::EmailTokeniser.split(email)] 
         end
-
+        
+        if weak_words = self.weak_words
+          raise "weak_words must return an Array" unless (weak_words.is_a? Array)
+          weak_words += weak_words 
+        end
+        
+        
         password_score = ::Zxcvbn.test(password, weak_words).score
         if password_score < min_password_score
           self.errors.add :password, :weak_password, score: password_score, min_password_score: min_password_score
