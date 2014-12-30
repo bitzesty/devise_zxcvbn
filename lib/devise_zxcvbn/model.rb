@@ -17,11 +17,13 @@ module Devise
         weak_words = []
         
         # User method results are saved locally to prevent repeat calls that might be expensive
-        if email = self.email
+        if self.respond_to? :email
+          email = self.email
           weak_words += [email, *DeviseZxcvbn::EmailTokeniser.split(email)] 
         end
         
-        if weak_words = self.weak_words
+        if self.respond_to? :weak_words
+          weak_words = self.weak_words
           raise "weak_words must return an Array" unless (weak_words.is_a? Array)
           weak_words += weak_words 
         end
