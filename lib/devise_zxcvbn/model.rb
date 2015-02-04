@@ -19,7 +19,7 @@ module Devise
         # User method results are saved locally to prevent repeat calls that might be expensive
         if self.respond_to? :email
           local_email = self.email
-          zxcvbn_weak_words += [email, *DeviseZxcvbn::EmailTokeniser.split(email)] 
+          zxcvbn_weak_words += [local_email, *DeviseZxcvbn::EmailTokeniser.split(local_email)] 
         end
         
         if self.respond_to? :weak_words
