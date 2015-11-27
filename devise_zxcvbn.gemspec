@@ -6,9 +6,9 @@ require 'devise_zxcvbn/version'
 Gem::Specification.new do |spec|
   spec.name          = "devise_zxcvbn"
   spec.version       = DeviseZxcvbn::VERSION
-  spec.authors       = ["Matthew Ford"]
-  spec.email         = ["matt@bitzesty.com"]
-  spec.description   = %q{It adds password strength checking via ruby-zxcvbn to reject weak passwords }
+  spec.authors       = ["Bit Zesty"]
+  spec.email         = ["info@bitzesty.com"]
+  spec.description   = %q{This gems works with devise to provide backend password strength checking via zxcvbn-js to reject weak passwords }
   spec.summary       = %q{Devise plugin to reject weak passwords}
   spec.homepage      = "https://github.com/bitzesty/devise_zxcvbn"
   spec.license       = "MIT"
@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 2.14"
 
   spec.add_runtime_dependency "devise"
-  spec.add_runtime_dependency("zxcvbn-ruby", ">= 0.0.2")
+  spec.add_runtime_dependency("zxcvbn-js", "~> 4.2.0")
 end
