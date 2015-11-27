@@ -14,10 +14,15 @@ Add this line to your application's Gemfile:
     gem 'devise_zxcvbn'
 
 
-## Devise Configuration
+## Configuration
 
     class User < ActiveRecord::Base
-      devise :database_authenticatable, :validatable, :zxcvbnable
+      devise :zxcvbnable
+
+      # Optionally add more weak words to check against:
+      def weak_words
+        ['mysitename', self.name, self.username]
+      end
     end
 
 ### Default parameters
