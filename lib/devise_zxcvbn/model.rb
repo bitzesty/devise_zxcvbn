@@ -28,7 +28,7 @@ module Devise
         Devise::Models.config(self, :min_password_score)
 
         def password_score(user, arg_email=nil)
-          password = ((user.respond_to? :password)) ? user.password : user)
+          password = user.respond_to?(:password) ? user.password : user
 
           zxcvbn_weak_words = []
 
