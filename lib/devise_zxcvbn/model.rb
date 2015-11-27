@@ -6,6 +6,7 @@ module Devise
       extend ActiveSupport::Concern
 
       delegate :min_password_score, to: "self.class"
+      delegate :zxcvbn_tester, to: "self.class"
 
       included do
         validate :not_weak_password, if: :password_required?
@@ -26,6 +27,7 @@ module Devise
 
       module ClassMethods
         Devise::Models.config(self, :min_password_score)
+        Devise::Models.config(self, :zxcvbn_tester)
 
         def password_score(user, arg_email=nil)
           password = user.respond_to?(:password) ? user.password : user
@@ -48,7 +50,7 @@ module Devise
             zxcvbn_weak_words += local_weak_words
           end
 
-          ::Zxcvbn.test(password, zxcvbn_weak_words).score
+          zxcvbn_tester.test(password, zxcvbn_weak_words).score
         end
       end
     end
