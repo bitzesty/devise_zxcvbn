@@ -40,12 +40,12 @@ module Devise
 
           # User method results are saved locally to prevent repeat calls that might be expensive
           if user.respond_to? :email
-            local_email = self.email
+            local_email = user.email
             zxcvbn_weak_words += [local_email, *DeviseZxcvbn::EmailTokeniser.split(local_email)]
           end
 
           if user.respond_to? :weak_words
-            local_weak_words = self.weak_words
+            local_weak_words = user.weak_words
             raise "weak_words must return an Array" unless (local_weak_words.is_a? Array)
             zxcvbn_weak_words += local_weak_words
           end
