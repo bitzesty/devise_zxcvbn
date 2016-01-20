@@ -19,8 +19,11 @@ module Devise
       private
 
       def not_weak_password
-        if password_score < min_password_score
-          self.errors.add :password, :weak_password, score: password_score, min_password_score: min_password_score
+        score = password_score
+        if score.score < min_password_score
+          feedback = score.feedback.values.flatten.select(&:present?).join('. ').gsub(/\.\s*\./, '.')
+          feedback = 'Add another word or two. Uncommon words are better.' if feedback.blank?
+          self.errors.add :password, :weak_password, feedback: feedback, crack_time_display: score.crack_times_display['offline_fast_hashing_1e10_per_second'], score: score.score, min_password_score: min_password_score
           return false
         end
       end
@@ -50,7 +53,7 @@ module Devise
             zxcvbn_weak_words += local_weak_words
           end
 
-          zxcvbn_tester.test(password, zxcvbn_weak_words).score
+          zxcvbn_tester.test(password, zxcvbn_weak_words)
         end
       end
     end
