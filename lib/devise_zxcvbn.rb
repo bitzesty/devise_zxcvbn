@@ -4,21 +4,13 @@ require "zxcvbn"
 
 module Devise
 
+  # The minimun score for a password.
+  mattr_reader :min_password_score
   @@min_password_score = 4
 
-  def self.min_password_score
-    @@min_password_score
-  end
-
   def self.min_password_score=(score)
-    if (0..4).include?(score)
-      if score < 3
-        ::Rails.logger.warn "[devise_zxcvbn] A score of less than 3 is not recommended."
-      end
-      @@min_password_score = score
-    else
-      raise "The min_password_score must be an integer and between 0..4"
-    end
+    raise "The min_password_score must be an integer and between 0..4" unless (0..4).include?(score)
+    @@min_password_score = score
   end
 
   def self.zxcvbn_tester
@@ -26,4 +18,4 @@ module Devise
   end
 end
 
-Devise.add_module :zxcvbnable, :model => "devise_zxcvbn/model"
+Devise.add_module :zxcvbnable, model: "devise_zxcvbn/model"
