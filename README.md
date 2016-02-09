@@ -27,7 +27,7 @@ Add this line to your application's Gemfile:
 
 ### Default parameters
 
-A score of less than 3 is not recommended.
+_A score of less than 3 is not recommended._
 
     # config/initializers/devise.rb
     Devise.setup do |config|
@@ -36,7 +36,13 @@ A score of less than 3 is not recommended.
 
 ### Error Message
 
-Example error message, the `score` and `min_password_score` variables are also passed through if you need them.
+The defaul error message, displays an error:
+
+    "not strong enough. It scored %{score}. It must score at least %{min_password_score}."
+
+You can customize this error message modifiying the `devise` yaml file.
+
+The `feedback`, `crack_time_display`, `score` and `min_password_score` variables are passed through if you need them.
 
     # config/locales/devise.en.yml
     en:
