@@ -18,4 +18,8 @@ module Devise
   end
 end
 
+# Load default I18n
+#
+I18n.load_path.unshift File.join(File.dirname(__FILE__), *%w[devise_zxcvbn locales en.yml])
+
 Devise.add_module :zxcvbnable, model: "devise_zxcvbn/model"
