@@ -13,6 +13,7 @@ describe 'Devise zxcvbn' do
   it "Sets the min_password_score value" do
     Devise.min_password_score = 2
     expect(Devise.min_password_score).to eq(2)
+    Devise.min_password_score = 4 # Restore default
   end
 
   it "returns a memoized instance of Zxcvbn::Tester" do

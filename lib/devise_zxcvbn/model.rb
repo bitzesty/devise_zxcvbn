@@ -13,19 +13,35 @@ module Devise
       end
 
       def password_score
-        self.class.password_score(self)
+        @pass_score = self.class.password_score(self)
       end
 
       private
 
       def not_weak_password
-        score = password_score
-        if score.score < min_password_score
-          feedback = score.feedback.values.flatten.select(&:present?).join('. ').gsub(/\.\s*\./, '.')
-          feedback = 'Add another word or two. Uncommon words are better.' if feedback.blank?
-          self.errors.add :password, :weak_password, feedback: feedback, crack_time_display: score.crack_times_display['offline_fast_hashing_1e10_per_second'], score: score.score, min_password_score: min_password_score
-          return false
+        if password_score.score < min_password_score
+          errors.add :password, :weak_password, i18n_variables
         end
+      end
+
+      def i18n_variables
+        {
+          feedback: feedback,
+          crack_time_display: time_to_crack,
+          score: @pass_score.score,
+          min_password_score: min_password_score
+        }
+      end
+
+      def feedback
+        feedback = @pass_score.feedback.values.flatten.reject(&:empty?)
+        return 'Add another word or two. Uncommon words are better.' if feedback.empty?
+
+        feedback.join('. ').gsub(/\.\s*\./, '.')
+      end
+
+      def time_to_crack
+        @pass_score.crack_times_display['offline_fast_hashing_1e10_per_second']
       end
 
       module ClassMethods
