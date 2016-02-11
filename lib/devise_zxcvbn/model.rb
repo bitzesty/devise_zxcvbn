@@ -26,14 +26,14 @@ module Devise
 
       def i18n_variables
         {
-          feedback: feedback,
+          feedback: zxcvbn_feedback,
           crack_time_display: time_to_crack,
           score: @pass_score.score,
           min_password_score: min_password_score
         }
       end
 
-      def feedback
+      def zxcvbn_feedback
         feedback = @pass_score.feedback.values.flatten.reject(&:empty?)
         return 'Add another word or two. Uncommon words are better.' if feedback.empty?
 
