@@ -5,7 +5,8 @@
 [![Code Climate](https://codeclimate.com/github/bitzesty/devise_zxcvbn/badges/gpa.svg)](https://codeclimate.com/github/bitzesty/devise_zxcvbn)
 
 Plugin for [devise](https://github.com/plataformatec/devise) to reject weak passwords, using [zxcvbn-js](https://github.com/bitzesty/zxcvbn-js) which is a ruby port of [zxcvbn: realistic password strength estimation](https://tech.dropbox.com/2012/04/zxcvbn-realistic-password-strength-estimation/).
-The user's password will be rejected if the score is below 4 by default. It also uses the email as user input to zxcvbn, to downscore passwords containing the email.
+
+The user's password will be rejected if the score is below 4 by default. It also uses the email as user input to zxcvbn, to reject passwords containing parts of the email (if using zxcvbn.js on the frontend you should also do this to get the same score).
 
 The scores 0, 1, 2, 3 or 4 are given when the estimated crack time (seconds) is less than `10**2`, `10**4`, `10**6`, `10**8`, Infinity.
 
@@ -38,11 +39,11 @@ _A score of less than 3 is not recommended._
 
 ### Error Message
 
-The defaul error message, displays an error:
+The default error message:
 
     "not strong enough. It scored %{score}. It must score at least %{min_password_score}."
 
-You can customize this error message modifiying the `devise` yaml file.
+You can customize this error message modifying the `devise` YAML file.
 
 The `feedback`, `crack_time_display`, `score` and `min_password_score` variables are passed through if you need them.
 
