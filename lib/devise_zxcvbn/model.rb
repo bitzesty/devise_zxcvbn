@@ -49,7 +49,7 @@ module Devise
         Devise::Models.config(self, :zxcvbn_tester)
 
         def password_score(user, arg_email=nil)
-          password = user.respond_to?(:password) ? user.password : user
+          password = user.respond_to?(:password) ? user.password.to_s : user
 
           zxcvbn_weak_words = []
 
