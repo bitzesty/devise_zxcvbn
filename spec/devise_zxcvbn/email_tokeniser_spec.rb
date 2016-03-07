@@ -10,6 +10,10 @@ describe DeviseZxcvbn::EmailTokeniser do
     expect(split("björn@email.com")).to eq(%w(björn email com))
   end
 
+  it "should return empty array when email is nil" do
+    expect(split(nil)).to eq([])
+  end
+
   def split(email)
     DeviseZxcvbn::EmailTokeniser.split(email)
   end
