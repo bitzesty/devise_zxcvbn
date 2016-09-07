@@ -19,7 +19,7 @@ module Devise
       private
 
       def not_weak_password
-        if password_score.score < min_password_score
+        if errors.messages.blank? && password_score.score < min_password_score
           errors.add :password, :weak_password, i18n_variables
         end
       end
