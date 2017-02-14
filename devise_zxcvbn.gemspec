@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec_junit_formatter"
 
   spec.add_runtime_dependency "devise"
-  spec.add_runtime_dependency("zxcvbn-js", "~> 4.2.0")
+  spec.add_runtime_dependency("zxcvbn-js", "~> 4.4.1")
 end
