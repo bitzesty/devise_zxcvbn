@@ -1,3 +1,3 @@
 module DeviseZxcvbn
-  VERSION = "2.1.2"
+  VERSION = "4.4.1"
 end
