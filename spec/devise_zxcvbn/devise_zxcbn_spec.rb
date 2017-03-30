@@ -1,7 +1,6 @@
 require "devise_zxcvbn"
 
 describe 'Devise zxcvbn' do
-
   it "Returns the default value for min_password_score of 4" do
     expect(Devise.min_password_score).to eq(4)
   end

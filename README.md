@@ -14,50 +14,79 @@ The scores 0, 1, 2, 3 or 4 are given when the estimated crack time (seconds) is 
 
 Add this line to your application's Gemfile:
 
-    gem 'devise_zxcvbn'
-
+```ruby
+gem 'devise_zxcvbn'
+```
 
 ## Configuration
 
-    class User < ActiveRecord::Base
-      devise :zxcvbnable
+```ruby
+class User < ActiveRecord::Base
+  devise :zxcvbnable
 
-      # Optionally add more weak words to check against:
-      def weak_words
-        ['mysitename', self.name, self.username]
-      end
-    end
+  # Optionally add more weak words to check against:
+  def weak_words
+    ['mysitename', self.name, self.username]
+  end
+end
+```
+
+## Available methods for devise resources
+
+```ruby
+class User < ApplicationRecord
+  devise :zxcvbnable
+end
+
+user = User.new.tap do |user|
+  user.email = "example@example.com"
+  user.password = "123456789"
+end
+
+user.password_score => #<OpenStruct password="123456789", guesses=6, guesses_log10=0.7781512503836435, sequence=[{"pattern"=>"dictionary", "i"=>0, "j"=>8, "token"=>"123456789", "matched_word"=>"123456789", "rank"=>5, "dictionary_name"=>"passwords", "reversed"=>false, "l33t"=>false, "base_guesses"=>5, "uppercase_variations"=>1, "l33t_variations"=>1, "guesses"=>5, "guesses_log10"=>0.6989700043360187}], calc_time=15, crack_times_seconds={"online_throttling_100_per_hour"=>216, "online_no_throttling_10_per_second"=>0.6, "offline_slow_hashing_1e4_per_second"=>0.0006, "offline_fast_hashing_1e10_per_second"=>6.0e-10}, crack_times_display={"online_throttling_100_per_hour"=>"4 minutes", "online_no_throttling_10_per_second"=>"less than a second", "offline_slow_hashing_1e4_per_second"=>"less than a second", "offline_fast_hashing_1e10_per_second"=>"less than a second"}, score=0, feedback={"warning"=>"This is a top-10 common password", "suggestions"=>["Add another word or two. Uncommon words are better."]}>
+# returns a simple OpenStruct object so than you could send another messages to get more info
+
+user.password_sample => "c7f450c91d5b2fd067cf53c76e2ea727" # returns a valid password sample, you can use it for further validations
+
+user.password_weak? => true/false # returns a boolean result of checking of weakness of your set password
+```
 
 ### Default parameters
 
 _A score of less than 3 is not recommended._
 
-    # config/initializers/devise.rb
-    Devise.setup do |config|
-      config.min_password_score = 4
-    end
+```ruby
+# config/initializers/devise.rb
+Devise.setup do |config|
+  config.min_password_score = 4
+end
+```
 
 ### Error Message
 
 The default error message:
 
-    "not strong enough. It scored %{score}. It must score at least %{min_password_score}."
+```yml
+"not strong enough. It scored %{score}. It must score at least %{min_password_score}."
+```
 
 You can customize this error message modifying the `devise` YAML file.
 
-The `feedback`, `crack_time_display`, `score` and `min_password_score` variables are passed through if you need them.
+The `crack_time_display`, `password_sample`, `score` and `min_password_score` variables are passed through if you need them.
 
-    # config/locales/devise.en.yml
-    en:
-      errors:
-        messages:
-          weak_password: "not strong enough. Consider adding a number, symbols or more letters to make it stronger."
-
+```yml
+# config/locales/devise.en.yml
+en:
+  errors:
+    messages:
+      weak_password: "not strong enough. Consider adding a number, symbols or more letters to make it stronger."
+```
 
 ## Contributing
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+3. Add test coverage for the feature, We use rspec for this purpose
+4. Commit your changes (`git commit -am 'Add some feature'`)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create new Pull Request

@@ -1,4 +1,6 @@
-require 'devise_zxcvbn/email_tokeniser'
+require "devise_zxcvbn/email_tokeniser"
+require "devise_zxcvbn/errors/devise_zxcvbn_error"
+require "ostruct"
 
 module Devise
   module Models
@@ -13,13 +15,27 @@ module Devise
       end
 
       def password_score
-        @pass_score = self.class.password_score(self)
+        @password_score = self.class.password_score(self)
+      end
+
+      def password_sample
+        @fake_user ||= OpenStruct.new(password: SecureRandom.hex)
+
+        while self.class.password_score(@fake_user).score < min_password_score do
+          @fake_user.public_send(:password=, SecureRandom.hex)
+        end
+
+        return @fake_user.password
+      end
+
+      def password_weak?
+        password_score.score < min_password_score
       end
 
       private
 
       def not_weak_password
-        if errors.messages.blank? && password_score.score < min_password_score
+        if errors.messages.blank? && password_weak?
           errors.add :password, :weak_password, i18n_variables
         end
       end
@@ -28,28 +44,31 @@ module Devise
         {
           feedback: zxcvbn_feedback,
           crack_time_display: time_to_crack,
-          score: @pass_score.score,
-          min_password_score: min_password_score
+          score: password_score.score,
+          min_password_score: min_password_score,
+          password_sample: password_sample
         }
       end
 
       def zxcvbn_feedback
-        feedback = @pass_score.feedback.values.flatten.reject(&:empty?)
-        return 'Add another word or two. Uncommon words are better.' if feedback.empty?
+        feedback = password_score.feedback.values.flatten.reject(&:empty?)
+        return "Add another word or two. Uncommon words are better." if feedback.empty?
 
-        feedback.join('. ').gsub(/\.\s*\./, '.')
+        feedback.join(". ").gsub(/\.\s*\./, ".")
       end
 
       def time_to_crack
-        @pass_score.crack_times_display['offline_fast_hashing_1e10_per_second']
+        password_score.crack_times_display["offline_fast_hashing_1e10_per_second"]
       end
 
-      module ClassMethods
+      class_methods do
         Devise::Models.config(self, :min_password_score)
         Devise::Models.config(self, :zxcvbn_tester)
 
-        def password_score(user, arg_email=nil)
-          password = user.respond_to?(:password) ? user.password.to_s : user
+        def password_score(user, arg_email = nil)
+          return raise DeviseZxcvbnError, "the object must respond to password" unless user.respond_to?(:password)
+
+          password = user.password.to_s
 
           zxcvbn_weak_words = []
 
@@ -58,14 +77,15 @@ module Devise
           end
 
           # User method results are saved locally to prevent repeat calls that might be expensive
-          if user.respond_to? :email
+          if user.respond_to?(:email)
             local_email = user.email
             zxcvbn_weak_words += [local_email, *DeviseZxcvbn::EmailTokeniser.split(local_email)]
           end
 
-          if user.respond_to? :weak_words
+          if user.respond_to?(:weak_words)
+            return raise DeviseZxcvbnError, "weak_words must return an Array" unless user.weak_words.is_a?(Array)
+
             local_weak_words = user.weak_words
-            raise "weak_words must return an Array" unless (local_weak_words.is_a? Array)
             zxcvbn_weak_words += local_weak_words
           end
 
