@@ -39,14 +39,22 @@ describe Devise::Models::Zxcvbnable do
 
   describe "#password_sample" do
     let(:user) { ValidDummyClass.new("Jm1C4C3aaDzC1aRW") }
-    let(:password_sample) { user.password_sample }
-
-    let(:tester) { ::Zxcvbn::Tester.new }
 
     it "returns valid password sample" do
+      tester = ::Zxcvbn::Tester.new
+      password_sample = user.password_sample
+
       password_score = tester.test(password_sample)
 
       expect(password_score).to be >= 4
+    end
+
+    it "memoizates password sample" do
+      allow(SecureRandom).to receive(:hex).and_return("Jm1C4C3aaDzC1aRW")
+
+      expect(SecureRandom).to receive(:hex).once
+
+      2.times { user.password_sample }
     end
   end
 

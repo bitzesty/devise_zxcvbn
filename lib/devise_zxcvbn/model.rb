@@ -22,7 +22,7 @@ module Devise
         @fake_user ||= OpenStruct.new(password: SecureRandom.hex)
 
         while self.class.password_score(@fake_user).score < min_password_score do
-          @fake_user.public_send(:password=, SecureRandom.hex)
+          @fake_user.password = SecureRandom.hex
         end
 
         return @fake_user.password
