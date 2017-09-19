@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec_junit_formatter"
+  spec.add_development_dependency "byebug"
 
   spec.add_runtime_dependency "devise"
   spec.add_runtime_dependency("zxcvbn-js", "~> 4.4.1")
