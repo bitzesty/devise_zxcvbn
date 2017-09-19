@@ -57,17 +57,16 @@ describe Devise::Models::Zxcvbnable do
 
     context "when password score is week" do
       let(:user) { ValidDummyClass.new("12345678") }
-      let(:password_sample) { user.password_sample }
 
       it "returns false for validate" do
         expect(user).to_not be_valid
       end
 
-      it "returns validation message with password sample" do
+      it "returns validation message" do
         user.validate
 
         expect(user.errors[:password])
-          .to eq(["not strong enough. It scored 0. It must score at least 4. Try to set this one: #{password_sample}"])
+          .to eq(["not strong enough. It scored 0. It must score at least 4."])
       end
     end
   end
