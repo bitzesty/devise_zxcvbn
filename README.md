@@ -46,8 +46,6 @@ end
 user.password_score => #<OpenStruct password="123456789", guesses=6, guesses_log10=0.7781512503836435, sequence=[{"pattern"=>"dictionary", "i"=>0, "j"=>8, "token"=>"123456789", "matched_word"=>"123456789", "rank"=>5, "dictionary_name"=>"passwords", "reversed"=>false, "l33t"=>false, "base_guesses"=>5, "uppercase_variations"=>1, "l33t_variations"=>1, "guesses"=>5, "guesses_log10"=>0.6989700043360187}], calc_time=15, crack_times_seconds={"online_throttling_100_per_hour"=>216, "online_no_throttling_10_per_second"=>0.6, "offline_slow_hashing_1e4_per_second"=>0.0006, "offline_fast_hashing_1e10_per_second"=>6.0e-10}, crack_times_display={"online_throttling_100_per_hour"=>"4 minutes", "online_no_throttling_10_per_second"=>"less than a second", "offline_slow_hashing_1e4_per_second"=>"less than a second", "offline_fast_hashing_1e10_per_second"=>"less than a second"}, score=0, feedback={"warning"=>"This is a top-10 common password", "suggestions"=>["Add another word or two. Uncommon words are better."]}>
 # returns a simple OpenStruct object so than you could send another messages to get more info
 
-user.password_sample => "c7f450c91d5b2fd067cf53c76e2ea727" # returns a valid password sample, you can use it for further validations
-
 user.password_weak? => true/false # returns a boolean result of checking of weakness of your set password
 ```
 

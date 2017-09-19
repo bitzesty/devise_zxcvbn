@@ -18,16 +18,6 @@ module Devise
         @password_score = self.class.password_score(self)
       end
 
-      def password_sample
-        @fake_user ||= OpenStruct.new(password: SecureRandom.hex)
-
-        while self.class.password_score(@fake_user).score < min_password_score do
-          @fake_user.password = SecureRandom.hex
-        end
-
-        return @fake_user.password
-      end
-
       def password_weak?
         password_score.score < min_password_score
       end
@@ -45,8 +35,7 @@ module Devise
           feedback: zxcvbn_feedback,
           crack_time_display: time_to_crack,
           score: password_score.score,
-          min_password_score: min_password_score,
-          password_sample: password_sample
+          min_password_score: min_password_score
         }
       end
 
