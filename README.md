@@ -1,6 +1,6 @@
 # devise_zxcvbn
 
-[![Gem Version](https://badge.fury.io/rb/devise_zxcvbn.png)](http://badge.fury.io/rb/devise_zxcvbn)
+[![Gem Version](https://badge.fury.io/rb/devise_zxcvbn.svg)](http://badge.fury.io/rb/devise_zxcvbn)
 [![Circle CI](https://circleci.com/gh/bitzesty/devise_zxcvbn.svg?style=svg)](https://circleci.com/gh/bitzesty/devise_zxcvbn)
 [![Code Climate](https://codeclimate.com/github/bitzesty/devise_zxcvbn/badges/gpa.svg)](https://codeclimate.com/github/bitzesty/devise_zxcvbn)
 
