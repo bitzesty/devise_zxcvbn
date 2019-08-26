@@ -1,21 +1,23 @@
+require "active_model"
 require "devise"
 require "devise_zxcvbn"
-require "active_model"
 require "devise_zxcvbn/model"
 
 describe Devise::Models::Zxcvbnable do
-  ValidDummyClass = Struct.new(:password) do
+  ValidDummyClass = Struct.new(:password, :check_password_complexity, keyword_init: true) do
     include ActiveModel::Validations
     include Devise::Models::Zxcvbnable
 
-    def password_required?
-      true
+    def check_password_complexity?
+      check_password_complexity
     end
   end
 
+  let(:check_password_complexity) { true }
+
   describe "#password_score" do
     context "when password is strong" do
-      let(:user) { ValidDummyClass.new("Jm1C4C3aaDzC1aRW") }
+      let(:user) { ValidDummyClass.new(password: "Jm1C4C3aaDzC1aRW", check_password_complexity: check_password_complexity) }
 
       it "returns the score equal 4" do
         password_score = user.password_score
@@ -26,7 +28,7 @@ describe Devise::Models::Zxcvbnable do
     end
 
     context "when password is weak" do
-      let(:user) { ValidDummyClass.new("12345678") }
+      let(:user) { ValidDummyClass.new(password: "12345678", check_password_complexity: check_password_complexity) }
 
       it "returns the weak score" do
         password_score = user.password_score
@@ -38,7 +40,7 @@ describe Devise::Models::Zxcvbnable do
   end
 
   describe "#password_weak?" do
-    let(:user) { ValidDummyClass.new("Jm1C4C3aaDzC1aRW") }
+    let(:user) { ValidDummyClass.new(password: "Jm1C4C3aaDzC1aRW", check_password_complexity: check_password_complexity) }
 
     it "returns false for the call of the method" do
       expect(user.password_weak?).to be_falsey
@@ -46,27 +48,54 @@ describe Devise::Models::Zxcvbnable do
   end
 
   describe "validations" do
-    context "when password score is strong" do
-      let(:user) { ValidDummyClass.new("Jm1C4C3aaDzC1aRW") }
+    subject { resource.validate; resource }
 
-      it "doesn't return validation message and returns true for validate" do
-        expect(user).to be_valid
-        expect(user.errors[:password]).to be_empty
+    let(:resource) { ValidDummyClass.new(password: password, check_password_complexity: check_password_complexity) }
+
+    context 'when password complexity check is required' do
+      context "when password is strong" do
+        let(:password) { 'Jm1C4C3aaDzC1aRW' }
+
+        it "expects the model to be valid" do
+          expect(subject).to be_valid
+        end
+
+        it "returns empty validation messages" do
+          expect(subject.errors[:password]).to be_empty
+        end
+      end
+
+      context "when password is weak" do
+        let(:password) { '12345678' }
+
+        it "expects the model to be invalid" do
+          expect(subject).to be_invalid
+        end
+
+        it "returns validation message" do
+          expect(subject.errors[:password])
+            .to eq(["not strong enough. It scored 0. It must score at least 4."])
+        end
       end
     end
 
-    context "when password score is week" do
-      let(:user) { ValidDummyClass.new("12345678") }
+    context 'when password complexity check is not required' do
+      let(:check_password_complexity) { false }
 
-      it "returns false for validate" do
-        expect(user).to_not be_valid
+      context "when password score is strong" do
+        let(:password) { 'Jm1C4C3aaDzC1aRW' }
+
+        it "expects the model to be valid" do
+          expect(subject).to be_valid
+        end
       end
 
-      it "returns validation message" do
-        user.validate
+      context "when password score is weak" do
+        let(:password) { '12345678' }
 
-        expect(user.errors[:password])
-          .to eq(["not strong enough. It scored 0. It must score at least 4."])
+        it "expects the model to be valid" do
+          expect(subject).to be_valid
+        end
       end
     end
   end
