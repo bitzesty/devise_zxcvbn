@@ -80,6 +80,18 @@ en:
       weak_password: "not strong enough. Consider adding a number, symbols or more letters to make it stronger."
 ```
 
+### Skipping password complexity validation
+
+If you have a suitably sized test suite that creates a significant number of resources which validate password complexity, your test suite execution time will increase.
+
+To turn off password complexity validation for certain conditions, you could implement a concern (or similar) that overloads `check_password_complexity?`:
+
+```ruby
+def check_password_complexity?
+  false if Rails.env.test? # skip password validation for test
+end
+```
+
 ## Contributing
 
 1. Fork it
