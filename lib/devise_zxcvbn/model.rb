@@ -11,7 +11,7 @@ module Devise
       delegate :zxcvbn_tester, to: "self.class"
 
       included do
-        validate :not_weak_password, if: :password_required?
+        validate :strong_password, if: :check_password_complexity?
       end
 
       def password_score
@@ -24,7 +24,7 @@ module Devise
 
       private
 
-      def not_weak_password
+      def strong_password
         if errors.messages.blank? && password_weak?
           errors.add :password, :weak_password, i18n_variables
         end
