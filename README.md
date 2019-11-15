@@ -70,7 +70,7 @@ The default error message:
 
 You can customize this error message modifying the `devise` YAML file.
 
-The `crack_time_display`, `password_sample`, `score` and `min_password_score` variables are passed through if you need them.
+The `crack_time_display`, `feedback`, `score` and `min_password_score` variables are passed through if you need them.
 
 ```yml
 # config/locales/devise.en.yml
