@@ -11,7 +11,7 @@ module Devise
       delegate :zxcvbn_tester, to: "self.class"
 
       included do
-        validate :strong_password, if: :check_password_complexity?
+        validate :strong_password, unless: :skip_password_complexity?
       end
 
       def password_score
