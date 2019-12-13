@@ -22,6 +22,12 @@ module Devise
         password_score.score < min_password_score
       end
 
+      protected
+
+      def skip_password_complexity?
+        !password_required?
+      end
+
       private
 
       def strong_password
