@@ -8,7 +8,6 @@ module Devise
       extend ActiveSupport::Concern
 
       delegate :min_password_score, to: "self.class"
-      delegate :zxcvbn_tester, to: "self.class"
 
       included do
         validate :strong_password, unless: :skip_password_complexity?
@@ -58,7 +57,6 @@ module Devise
 
       class_methods do
         Devise::Models.config(self, :min_password_score)
-        Devise::Models.config(self, :zxcvbn_tester)
 
         def password_score(user, arg_email = nil)
           return raise DeviseZxcvbnError, "the object must respond to password" unless user.respond_to?(:password)
@@ -84,7 +82,7 @@ module Devise
             zxcvbn_weak_words += local_weak_words
           end
 
-          zxcvbn_tester.test(password, zxcvbn_weak_words)
+          Zxcvbn.test(password, zxcvbn_weak_words)
         end
       end
     end

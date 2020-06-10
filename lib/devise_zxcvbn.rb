@@ -12,10 +12,6 @@ module Devise
     raise "The min_password_score must be an integer and between 0..4" unless (0..4).include?(score)
     @@min_password_score = score
   end
-
-  def self.zxcvbn_tester
-    @@zxcvbn_tester ||= ::Zxcvbn::Tester.new
-  end
 end
 
 # Load default I18n
