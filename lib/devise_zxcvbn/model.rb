@@ -32,7 +32,7 @@ module Devise
 
       def strong_password
         if errors.messages.blank? && password_weak?
-          errors.add :password, :weak_password, i18n_variables
+          errors.add :password, :weak_password, **i18n_variables
         end
       end
 
