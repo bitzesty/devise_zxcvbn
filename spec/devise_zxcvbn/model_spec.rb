@@ -1,4 +1,5 @@
 require 'active_model'
+require 'action_view'
 require 'devise'
 require 'devise_zxcvbn'
 require 'devise_zxcvbn/model'
@@ -24,6 +25,7 @@ describe Devise::Models::Zxcvbnable do
 
         expect(password_score.score).to eq(4)
         expect(password_score.crack_times_display['offline_fast_hashing_1e10_per_second']).to eq('12 days')
+        expect(user.send(:time_to_crack)).to eq('12 days')
       end
     end
 
@@ -35,6 +37,7 @@ describe Devise::Models::Zxcvbnable do
 
         expect(password_score.score).to eq(0)
         expect(password_score.crack_times_display['offline_fast_hashing_1e10_per_second']).to eq('less than a second')
+        expect(user.send(:time_to_crack)).to eq('less than 5 seconds')
       end
     end
   end
