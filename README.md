@@ -112,8 +112,8 @@ software, and may be redistributed under the terms specified in the
 
 ![Bit Zesty](https://bitzesty.com/wp-content/uploads/2017/01/logo_dark.png)
 
-devise_zxcvbn is maintained by Bit Zesty LTD.
-The names and logos for Bit Zesty are trademarks of Bit Zesty LTD.
+devise_zxcvbn is maintained by Bit Zesty Limited.
+The names and logos for Bit Zesty are trademarks of Bit Zesty Limited.
 
 See [our other projects](https://bitzesty.com/client-stories/) or
 [hire us](https://bitzesty.com/contact/) to design, develop, and support your product or service.
