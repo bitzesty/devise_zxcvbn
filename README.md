@@ -1,10 +1,10 @@
 # devise_zxcvbn
 
 [![Gem Version](https://badge.fury.io/rb/devise_zxcvbn.svg)](http://badge.fury.io/rb/devise_zxcvbn)
-[![Circle CI](https://circleci.com/gh/bitzesty/devise_zxcvbn.svg?style=svg)](https://circleci.com/gh/bitzesty/devise_zxcvbn)
+[![Ruby](https://github.com/bitzesty/devise_zxcvbn/actions/workflows/ruby.yml/badge.svg?branch=master)](https://github.com/bitzesty/devise_zxcvbn/actions/workflows/ruby.yml)
 [![Code Climate](https://codeclimate.com/github/bitzesty/devise_zxcvbn/badges/gpa.svg)](https://codeclimate.com/github/bitzesty/devise_zxcvbn)
 
-Plugin for [devise](https://github.com/plataformatec/devise) to reject weak passwords, using [zxcvbn-js](https://github.com/bitzesty/zxcvbn-js) which is a ruby port of [zxcvbn: realistic password strength estimation](https://tech.dropbox.com/2012/04/zxcvbn-realistic-password-strength-estimation/).
+Plugin for [devise](https://github.com/plataformatec/devise) to reject weak passwords, using [zxcvbn-rb](https://github.com/formigarafa/zxcvbn-rb) which is a ruby port of [zxcvbn: realistic password strength estimation](https://tech.dropbox.com/2012/04/zxcvbn-realistic-password-strength-estimation/).
 
 The user's password will be rejected if the score is below 4 by default. It also uses the email as user input to zxcvbn, to reject passwords containing parts of the email (if using zxcvbn.js on the frontend you should also do this to get the same score).
 
@@ -98,3 +98,22 @@ end
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
+
+# License
+
+devise_zxcvbn is Copyright © 2013 Bit Zesty. It is free
+software, and may be redistributed under the terms specified in the
+[LICENSE] file.
+
+[LICENSE]: https://github.com/bitzesty/devise_zxcvbn/blob/master/LICENSE
+
+
+# About Bit Zesty
+
+![Bit Zesty](https://bitzesty.com/wp-content/uploads/2017/01/logo_dark.png)
+
+devise_zxcvbn is maintained by Bit Zesty Limited.
+The names and logos for Bit Zesty are trademarks of Bit Zesty Limited.
+
+See [our other projects](https://bitzesty.com/client-stories/) or
+[hire us](https://bitzesty.com/contact/) to design, develop, and support your product or service.
