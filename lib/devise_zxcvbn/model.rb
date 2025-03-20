@@ -6,6 +6,7 @@ module Devise
   module Models
     module Zxcvbnable
       extend ActiveSupport::Concern
+      include ActionView::Helpers::DateHelper
 
       delegate :min_password_score, to: "self.class"
       delegate :zxcvbn_tester, to: "self.class"
@@ -53,7 +54,7 @@ module Devise
       end
 
       def time_to_crack
-        password_score.crack_times_display["offline_fast_hashing_1e10_per_second"]
+        distance_of_time_in_words(Time.now, Time.now + password_score.crack_times_seconds["offline_fast_hashing_1e10_per_second"], include_seconds: true)
       end
 
       class_methods do
