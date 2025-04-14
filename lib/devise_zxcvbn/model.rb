@@ -1,6 +1,5 @@
 require "devise_zxcvbn/email_tokeniser"
 require "devise_zxcvbn/errors/devise_zxcvbn_error"
-require "ostruct"
 
 module Devise
   module Models
