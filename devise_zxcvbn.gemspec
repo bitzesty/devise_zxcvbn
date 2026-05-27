@@ -25,7 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec_junit_formatter"
   spec.add_development_dependency "byebug"
 
-  spec.add_runtime_dependency "ostruct", "~> 0.1"
   spec.add_runtime_dependency "devise"
-  spec.add_runtime_dependency("zxcvbn", "~> 0.1.9")
+  spec.add_runtime_dependency("zxcvbn", "~> 0.1.13")
 end
