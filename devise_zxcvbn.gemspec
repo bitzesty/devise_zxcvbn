@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "byebug"
 
   spec.add_runtime_dependency "devise"
-  spec.add_runtime_dependency("zxcvbn", "~> 0.1.13")
+  spec.add_runtime_dependency("zxcvbn", ">= 0.1.13", "~> 1.0.0")
 end
